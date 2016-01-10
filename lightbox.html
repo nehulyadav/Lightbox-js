@@ -1,0 +1,128 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title> Lightbox trial </title>
+        <style type="text/css">
+body {
+    margin:0; 
+    padding:0; 
+    background:#FFF ;
+}
+#images {
+
+    width:1200px; 
+    margin:0 auto; 
+    background:#FFF ;
+    text-align:left;     
+    padding:75px; 
+    box-shadow: 10px 10px 5px #888888;    }
+
+#lightbox {
+    position:fixed; 
+    top:0; 
+    left:0; 
+    width:100%; 
+    height:100%; 
+    background: rgba(0,0,0,.9);
+    text-align:center;
+
+}
+
+
+        </style>
+    </head>
+<body>
+ 
+<div id="images">
+    <h1>Lightbox JS </h1>
+    <p> It is a jQuery- JavaScript library that implements the functionality of helping the client view the image in a modal window.
+    </p>
+
+    <p> Why did I want to create it? I wanted to create it because I was interested to suspend my workflow, quickly preview webpages dedicated to forms of media and transiton back; otherwise, I was required to add 100+ tabs on lets say, a website that sells paintings because the browser renderes images in a conventional manner by default. In technology, lightbox js is a better way of doing things and offers scalability that saves time and effort.
+    </p>
+
+    <p>Images:
+        <ul>
+            <li>
+                <a href="https://farm7.static.flickr.com/6130/5935338876_47b61c93a5.jpg" class="lightbox_trigger">
+                Picture 1
+                </a>
+            </li>
+            <li>
+                <a href="https://farm7.static.flickr.com/6020/5924329054_4bdc419c3a_o.jpg" class="lightbox_trigger">
+                Picture 2
+                </a>
+            </li>
+            <li>
+                <a href="https://farm7.static.flickr.com/6020/5931933181_ddb737e528.jpg" class="lightbox_trigger">
+                Picture 3
+                </a>
+            </li> 
+        </ul>
+     </p>
+</div> <!-- #/wrapper -->
+
+<div id="lightbox">
+    <p>Click to close</p>
+    <div id="content">
+        <img src="#" />
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script>
+jQuery(document).ready(function($) {
+    
+    $('.lightbox_trigger').click(function(e) {
+        
+        //prevent default action (hyperlink)
+        e.preventDefault();
+        
+        //Get clicked link href
+        var image_href = $(this).attr("href");
+        
+        /*  
+        If the lightbox window HTML already exists in document, 
+        change the img src to to match the href of whatever link was clicked
+        
+        If the lightbox window HTML doesn't exists, create it and insert it.
+        (This will only happen the first time around)
+        */
+        
+        if ($('#lightbox').length > 0) { // #lightbox exists
+            
+            //place href as img src value
+            $('#content').html('<img src="' + image_href + '" />');
+            
+            //show lightbox window - you could use .show('fast') for a transition
+            $('#lightbox').show();
+        }
+        
+        else { //#lightbox does not exist - create and insert (runs 1st time only)
+            
+            //create HTML markup for lightbox window
+            var lightbox = 
+            '<div id="lightbox">' +
+                '<p>Click to close</p>' +
+                '<div id="content">' + //insert clicked link's href into img src
+                    '<img src="' + image_href +'" />' +
+                '</div>' +  
+            '</div>';
+                
+            //insert lightbox HTML into page
+            $('body').append(lightbox);
+
+        }
+        
+    });
+    
+    //Click anywhere on the page to get rid of lightbox window
+ //must use live, as the lightbox element is inserted into the DOM
+            $('#lightbox').live('click', function() {
+    $('#lightbox').hide();
+});
+
+});
+</script>
+</body>
+</html>
